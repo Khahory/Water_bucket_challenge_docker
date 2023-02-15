@@ -8,10 +8,11 @@ COPY . /var/www/html/backend
 
 # folders permissions
 RUN chown -R www-data:www-data /var/www/html/backend
-RUN chmod -R 777 /var/www/html/backend
+RUN chmod -R 755 /var/www/html/backend
 
 # we need to copy our Apache config file
 COPY ./my-httpd.conf /usr/local/apache2/conf/httpd.conf
+
 # restart Apache
 RUN a2enmod rewrite
 RUN service apache2 restart

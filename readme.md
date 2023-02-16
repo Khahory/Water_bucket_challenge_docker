@@ -12,7 +12,7 @@ Docker: https://www.docker.com/
 ## Installation
 1. Clone the repository
 2. Run the command `docker compose up` in the root folder of the project
-3. Go to http://localhost--------------------------------------------------------
+3. Go to http://localhost:3000/ in your browser
 4. Enjoy
 
 ## About the docker-compose

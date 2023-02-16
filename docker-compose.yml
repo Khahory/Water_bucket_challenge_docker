@@ -11,3 +11,12 @@ services:
       - "4444:80"
     volumes:
       - ./backend:/var/www/html/backend # live reload
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/home/frontend # live reload

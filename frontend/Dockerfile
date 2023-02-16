@@ -1,5 +1,5 @@
 # what's base image?
-FROM node:19-alpine
+FROM node:19.6.0-alpine3.17
 
 # creating directory for the app
 RUN mkdir -p /home/frontend
@@ -12,7 +12,7 @@ COPY . /home/frontend
 
 # install dependencies
 RUN #npm i -g nodemon
-RUN npm install
+RUN npm install --silent
 
 # expose port 3000
 EXPOSE 3000

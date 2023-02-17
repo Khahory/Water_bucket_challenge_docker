@@ -12,16 +12,56 @@ class Exercisemodel extends CI_Model {
      * @return array
      */
     public function doExercise($exercise) {
-        $res_x = $this->init_bucket(
-            $exercise['bucket_x'],
-            $exercise['bucket_y'],
-            $exercise['amount_wanted_z']
-        );
+        $status_error = ['action' => 'NOT POSSIBLE',
+            'current_bucket_main' => null,
+            'current_bucket_other' => null,
+            'amount_wanted_z' => null];
+
+        // the amount_wanted_z cannot be greater than the bucket_x and bucket_y
+        if ($exercise['amount_wanted_z'] > $exercise['bucket_x'] && $exercise['amount_wanted_z'] > $exercise['bucket_y']) {
+            return [
+                'exercise' => $exercise,
+                'res_y' => $status_error,
+                'res_x' => $status_error
+            ];
+        }
+
+        // check if bucket_x and bucket_y are even or odd
+        if (
+            (
+                $exercise['bucket_x'] % 2 === 0 &&
+                $exercise['bucket_y'] % 2 === 0 &&
+                $exercise['amount_wanted_z'] % 2 === 0
+            ) ||
+            (
+                $exercise['bucket_x'] % 3 === 0 &&
+                $exercise['bucket_y'] % 3 === 0 &&
+                $exercise['amount_wanted_z'] % 3 === 0
+            )
+        ) {
+            $res_x = $this->init_bucket_x(
+                $exercise['bucket_x'],
+                $exercise['bucket_y'],
+                $exercise['amount_wanted_z']
+            );
+
+            $res_y = $this->init_bucket_y(
+                $exercise['bucket_x'],
+                $exercise['bucket_y'],
+                $exercise['amount_wanted_z']
+            );
+
+            return [
+                'exercise' => $exercise,
+                'res_y' => $res_y,
+                'res_x' => $res_x
+            ];
+        }
 
         return [
             'exercise' => $exercise,
-            'res_x' => $res_x,
-            'done' => TRUE
+            'res_y' => $status_error,
+            'res_x' => $status_error
         ];
     }
 
@@ -34,7 +74,7 @@ class Exercisemodel extends CI_Model {
      * @param $amount_wanted_z
      * @return array
      */
-    private function init_bucket($bucket_main_limit, $bucket_other_limit, $amount_wanted_z): array {
+    private function init_bucket_x($bucket_main_limit, $bucket_other_limit, $amount_wanted_z): array {
         if ($bucket_main_limit <= $amount_wanted_z) {
             $steps = [];
             $current_step = 0;
@@ -52,6 +92,11 @@ class Exercisemodel extends CI_Model {
                         'current_bucket_other' => $current_bucket_other,
                         'amount_wanted_z' => $amount_wanted_z
                     ];
+                }
+
+                // check if bucket_other is at amount_wanted_z
+                if ($current_bucket_other === $amount_wanted_z) {
+                    return $steps;
                 }
 
                 // transfer from bucket_main to bucket_other
@@ -79,5 +124,60 @@ class Exercisemodel extends CI_Model {
         }
 
         return [];
+    }
+
+    private function init_bucket_y($bucket_main_limit, $bucket_other_limit, $amount_wanted_z){
+        $steps = [];
+        $current_step = 0;
+        $current_bucket_main = 0;
+        $current_bucket_other = 0;
+
+        while (true) {
+            $current_step++;
+            // fill bucket_main
+            if ($current_bucket_other === 0) {
+                $current_bucket_other = $bucket_other_limit;
+                $steps[] = [
+                    'action' => 'fill',
+                    'current_bucket_main' => $current_bucket_main,
+                    'current_bucket_other' => $current_bucket_other,
+                    'amount_wanted_z' => $amount_wanted_z
+                ];
+            }
+
+            // check if bucket_other is at amount_wanted_z
+            if ($current_bucket_other === $amount_wanted_z) {
+                return $steps;
+            }
+
+            // transfer from bucket_other to bucket_main
+            if ($current_bucket_other > 0 && $current_bucket_main <= $bucket_main_limit) {
+                $current_bucket_other = $current_bucket_other - $bucket_main_limit;
+                $current_bucket_main = $bucket_main_limit;
+                $steps[] = [
+                    'action' => 'transfer',
+                    'current_bucket_main' => $current_bucket_main,
+                    'current_bucket_other' => $current_bucket_other,
+                    'amount_wanted_z' => $amount_wanted_z
+                ];
+            }
+
+            // check if bucket_other is at amount_wanted_z
+            if ($current_bucket_other === $amount_wanted_z) {
+                return $steps;
+            }
+
+            // dump bucket_main
+            if ($current_bucket_main > 0) {
+                $current_bucket_main = 0;
+                $steps[] = [
+                    'action' => 'dump',
+                    'current_bucket_main' => $current_bucket_main,
+                    'current_bucket_other' => $current_bucket_other,
+                    'amount_wanted_z' => $amount_wanted_z
+                ];
+            }
+        }
+
     }
 }

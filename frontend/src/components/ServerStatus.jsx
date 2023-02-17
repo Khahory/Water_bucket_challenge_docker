@@ -8,10 +8,17 @@ const ServerStatus = () => {
 
     useEffect(() => {
         const getServerStatus = async () => {
+            console.log("Fetching server status...")
             const status = await fetchStatus();
             setServer_status(status);
         }
-        getServerStatus().then(r => r)
+        getServerStatus()
+            .then(r => r)
+            .catch(e => {
+                // print error message
+                console.log(e.message)
+                setServer_status({message: "Error conneting to server, retry later", status: false});
+            });
     }, []);
 
 

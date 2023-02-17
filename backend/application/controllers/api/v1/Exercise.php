@@ -2,6 +2,7 @@
 
 require APPPATH . 'libraries/REST_Controller.php';
 
+/** @noinspection PhpUnused */
 class Exercise  extends REST_Controller  {
 
     function __construct() {
@@ -11,6 +12,7 @@ class Exercise  extends REST_Controller  {
     }
 
     /**
+     * @noinspection PhpUnused
      * @api {post} /api/v1/exercise Exercise
      * @apiSampleRequest http://localhost:4444/backend/api/v1/exercise
      * @return void

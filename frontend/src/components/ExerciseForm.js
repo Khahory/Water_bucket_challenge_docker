@@ -1,6 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import PostExerciseForm from "../services/PostExerciseForm";
 import {formatingInput} from "../helpers/Form";
+import ExerciseResult from "./ExerciseResult";
 
 const ExerciseForm = () => {
     // my state variables
@@ -9,6 +10,7 @@ const ExerciseForm = () => {
         bucketY: "",
         amountZ: "",
     });
+    const [result, setResult] = useState([]);
 
     // post request to backend
     const handleSubmit = (event) => {
@@ -17,7 +19,9 @@ const ExerciseForm = () => {
             bucket_y: exercise.bucketY,
             amount_wanted_z: exercise.amountZ,
         }).then((response) => {
+            // set result
             console.log(response);
+            setResult(response);
         });
         event.preventDefault(); // Prevents the default action of submitting the form
     }
@@ -54,28 +58,31 @@ const ExerciseForm = () => {
         onChange: handleChange,
     }
     return (
-        <form onSubmit={handleSubmit}>
-            <label>
-                Bucket x:
-                <input name="bucketX" {...propsInput} />
-            </label>
-            <br/>
-            <label>
-                Bucket Y:
-                <input name="bucketY" {...propsInput} />
-            </label>
-            <br/>
-            <label>
-                Amount wanted Z:
-                <input name="amountZ" {...propsInput} />
-            </label>
-            <br/><br/>
-            <input type="submit" value="Submit" disabled={
-                exercise.bucketX === "" ||
-                exercise.bucketY === "" ||
-                exercise.amountZ === ""
-            }/>
-        </form>
+        <div>
+            <form onSubmit={handleSubmit}>
+                <label>
+                    Bucket x:
+                    <input name="bucketX" {...propsInput} />
+                </label>
+                <br/>
+                <label>
+                    Bucket Y:
+                    <input name="bucketY" {...propsInput} />
+                </label>
+                <br/>
+                <label>
+                    Amount wanted Z:
+                    <input name="amountZ" {...propsInput} />
+                </label>
+                <br/><br/>
+                <input type="submit" value="Submit" disabled={
+                    exercise.bucketX === "" ||
+                    exercise.bucketY === "" ||
+                    exercise.amountZ === ""
+                }/>
+            </form>
+            <ExerciseResult result={result}/>
+        </div>
     );
 }
 

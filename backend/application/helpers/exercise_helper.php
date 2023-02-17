@@ -1,12 +1,13 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+/**
+ *   importarlo en la vista con:
+ *   Importar helper: application/config/autoload.php -> $autoload['helper'] = array('exercise');
+ *
+ */
+
 if (!function_exists('validate_exercise')) {
-    /**
-     *   importarlo en la vista con:
-     *   Importar helper: application/config/autoload.php -> $autoload['helper'] = array('exercise');
-     *
-     */
     function validate_exercise($exercise): bool {
         // validate exercise is not empty
         if (empty($exercise))
@@ -28,9 +29,9 @@ if (!function_exists('validate_exercise')) {
             $exercise['amount_wanted_z'] = preg_replace("/\D+/", "", $exercise['amount_wanted_z']);
 
             //string to int
-            $exercise['bucket_x'] = (int) $exercise['bucket_x'];
-            $exercise['bucket_y'] = (int) $exercise['bucket_y'];
-            $exercise['amount_wanted_z'] = (int) $exercise['amount_wanted_z'];
+            $exercise['bucket_x'] = (int)$exercise['bucket_x'];
+            $exercise['bucket_y'] = (int)$exercise['bucket_y'];
+            $exercise['amount_wanted_z'] = (int)$exercise['amount_wanted_z'];
 
             // validate exercise is positive numbers
             if (

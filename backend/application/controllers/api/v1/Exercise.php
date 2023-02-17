@@ -33,6 +33,7 @@ class Exercise  extends REST_Controller  {
         }
 
 
+        // do exercise
         $exercise_done = $this->exercisemodel->doExercise($exercise);
         $this->response([
             'status' => TRUE,
@@ -41,5 +42,4 @@ class Exercise  extends REST_Controller  {
             'is_valid' => TRUE
         ], REST_Controller::HTTP_OK);
     }
-
 }

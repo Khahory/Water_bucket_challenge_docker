@@ -1,4 +1,5 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php /** @noinspection PhpMissingReturnTypeInspection */
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Exercisemodel extends CI_Model {
 
@@ -6,7 +7,21 @@ class Exercisemodel extends CI_Model {
         parent::__construct();
     }
 
+    /**
+     * @param $exercise
+     * @return array
+     */
     public function doExercise($exercise) {
-        return $exercise;
+        $res_x = $this->init_bucket();
+
+        return [
+            'exercise' => $exercise,
+            'res_x' => $res_x,
+            'done' => TRUE
+        ];
+    }
+
+    private function init_bucket(): array {
+        return [];
     }
 }

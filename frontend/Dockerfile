@@ -8,7 +8,7 @@ RUN mkdir -p /home/frontend
 WORKDIR /home/frontend
 
 # copy app to the directory
-COPY . /home/frontend
+COPY . .
 
 # install dependencies
 RUN #npm i -g nodemon

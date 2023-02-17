@@ -33,8 +33,15 @@ class Exercise  extends REST_Controller  {
         }
 
 
+        // prepare exercise
+        $input_exercise = [
+            'bucket_x' => (int) $exercise['bucket_x'],
+            'bucket_y' => (int) $exercise['bucket_y'],
+            'amount_wanted_z' => (int) $exercise['amount_wanted_z']
+        ];
+
         // do exercise
-        $exercise_done = $this->exercisemodel->doExercise($exercise);
+        $exercise_done = $this->exercisemodel->doExercise($input_exercise);
         $this->response([
             'status' => TRUE,
             'message' => 'Exercise done!',

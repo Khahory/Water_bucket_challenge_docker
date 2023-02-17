@@ -21,6 +21,12 @@ class Exercisemodel extends CI_Model {
         ];
     }
 
+    /**
+     * @clues:
+     * if bucket_main <= amount_wanted_z then add (fill)
+     * if bucket_main >= amount_wanted_z then subtract (dump)
+     * @return array
+     */
     private function init_bucket(): array {
         return [];
     }

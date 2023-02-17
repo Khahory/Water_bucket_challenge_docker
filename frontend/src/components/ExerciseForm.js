@@ -24,32 +24,56 @@ const ExerciseForm = () => {
     // handle change in input
     const handleChange = (event) => {
         const {name, value} = event.target;
-        setExercise((prevExercise) => {
-            return {
-                ...prevExercise,
-                [name]: value,
-            }
-        });
+        const regex = /^[0-9\b]+$/; // only allow numbers
+        if (value === '' || regex.test(value)) {
+            setExercise((prevExercise) => {
+                return {
+                    ...prevExercise,
+                    [name]: value,
+                }
+            });
+        }
     }
 
+    // handle key press
+    const handleKeyPress = (event) => {
+        // only allow numbers
+        if (event.keyCode < 48 || event.keyCode > 57) {
+            event.preventDefault();
+        }
+    }
+
+    // handle input props
+    const propsInput = {
+        type: "number",
+        pattern: "[0-9]*",
+        inputMode: "numeric",
+        min: 1,
+        onKeyUp: handleKeyPress,
+        onChange: handleChange,
+    }
     return (
         <form onSubmit={handleSubmit}>
             <label>
                 Bucket x:
-                <input type="text" name="bucketX" onChange={handleChange} />
+                <input name="bucketX" {...propsInput} />
             </label>
             <br/>
             <label>
                 Bucket Y:
-                <input type="text" name="bucketY" onChange={handleChange} />
+                <input name="bucketY" {...propsInput} />
             </label>
             <br/>
             <label>
                 Amount wanted Z:
-                <input type="text" name="amountZ" onChange={handleChange} />
+                <input name="amountZ" {...propsInput} />
             </label>
             <br/><br/>
-            <input type="submit" value="Submit"/>
+            <input type="submit" value="Submit" disabled={
+                exercise.bucketX === "" ||
+                exercise.bucketY === "" ||
+                exercise.amountZ === ""
+            }/>
         </form>
     );
 }

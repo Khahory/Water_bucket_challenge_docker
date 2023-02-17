@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import PostExerciseForm from "../services/PostExerciseForm";
+import {formatingInput} from "../helpers/Form";
 
 const ExerciseForm = () => {
     // my state variables
@@ -24,8 +25,8 @@ const ExerciseForm = () => {
     // handle change in input
     const handleChange = (event) => {
         const {name, value} = event.target;
-        const regex = /^[0-9\b]+$/; // only allow numbers
-        if (value === '' || regex.test(value)) {
+        // only allow numbers
+        if (formatingInput(value) !== undefined) {
             setExercise((prevExercise) => {
                 return {
                     ...prevExercise,

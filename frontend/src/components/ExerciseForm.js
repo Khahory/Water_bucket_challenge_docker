@@ -22,6 +22,9 @@ const ExerciseForm = () => {
             // set result
             console.log(response);
             setResult(response);
+        }).catch((error) => {
+            console.error(error.response.data)
+            alert(`Error: ${error.response.data.message}, Invalid need to be a positive integer`)
         });
         event.preventDefault(); // Prevents the default action of submitting the form
     }

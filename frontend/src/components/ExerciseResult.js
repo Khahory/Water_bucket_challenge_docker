@@ -5,7 +5,9 @@ const ExerciseResult = (props) => {
     return (
         <div>
             <h3>Result</h3>
-            <p>{JSON.stringify(result)}</p>
+            <pre>
+                {JSON.stringify(result, null, 2)}
+            </pre>
         </div>
     );
 }

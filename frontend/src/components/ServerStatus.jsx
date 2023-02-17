@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import fetchStatus from "../services/Server";
 
-const ServerStatus = () => {
+const ServerStatus = ({updateServerStatus}) => {
     const [server_status, setServer_status] = useState(
         {message: "Loading...", status: false}
     );
@@ -11,13 +11,17 @@ const ServerStatus = () => {
             console.log("Fetching server status...")
             const status = await fetchStatus();
             setServer_status(status);
+            updateServerStatus(status);
         }
         getServerStatus()
             .then(r => r)
             .catch(e => {
+                const status = {message: "Error conneting to server (Backend), retry later", status: false};
+
                 // print error message
                 console.log(e.message)
-                setServer_status({message: "Error conneting to server, retry later", status: false});
+                setServer_status(status);
+                updateServerStatus(status);
             });
     }, []);
 

@@ -11,9 +11,11 @@ const ExerciseForm = () => {
         amountZ: "",
     });
     const [result, setResult] = useState(null);
+    const [loadingAPI, setLoadingAPI] = useState(false);
 
     // post request to backend
     const handleSubmit = (event) => {
+        setLoadingAPI(true);
         PostExerciseForm({
             bucket_x: exercise.bucketX,
             bucket_y: exercise.bucketY,
@@ -25,7 +27,7 @@ const ExerciseForm = () => {
         }).catch((error) => {
             console.error(error.response.data)
             alert(`Error: ${error.response.data.message}, Invalid need to be a positive integer`)
-        });
+        }).finally(() => setLoadingAPI(false))
         event.preventDefault(); // Prevents the default action of submitting the form
     }
 
@@ -81,7 +83,8 @@ const ExerciseForm = () => {
                 <input type="submit" value="Submit" disabled={
                     exercise.bucketX === "" ||
                     exercise.bucketY === "" ||
-                    exercise.amountZ === ""
+                    exercise.amountZ === "" ||
+                    loadingAPI
                 }/>
             </form>
             {result && <ExerciseResult result={result}/>}

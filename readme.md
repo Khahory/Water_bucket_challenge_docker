@@ -17,7 +17,7 @@ Docker: https://www.docker.com/
 ## Installation
 1. Clone the repository
 2. Run the command `docker compose up` in the root folder of the project
-3. Wait for the docker containers to be built and started (frontend can take a while)
+3. Wait for the docker containers to be built and started (frontend can take a while building... (╥﹏╥) )
 4. Go to http://localhost:3000/ in your browser
 5. Enjoy
 

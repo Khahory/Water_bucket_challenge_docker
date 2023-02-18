@@ -43,7 +43,7 @@ const ExerciseResult = (props) => {
                         ))}
                         </tbody>
                     </table>
-                ) : ( <h3>There is no solution</h3> )
+                ) : ( <h3>No Solution</h3> )
             }
 
             <pre>

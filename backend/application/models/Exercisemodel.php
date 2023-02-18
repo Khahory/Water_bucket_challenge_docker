@@ -85,7 +85,7 @@ class Exercisemodel extends CI_Model {
                 if ($current_bucket_main === 0) {
                     $current_bucket_main = $bucket_main_limit;
                     $steps[] = [
-                        'action' => 'fill',
+                        'action' => 'Fill bucket x',
                         'current_bucket_main' => $current_bucket_main,
                         'current_bucket_other' => $current_bucket_other,
                         'amount_wanted_z' => $amount_wanted_z
@@ -102,7 +102,7 @@ class Exercisemodel extends CI_Model {
                     $current_bucket_other = $current_bucket_main + $current_bucket_other;
                     $current_bucket_main = 0;
                     $steps[] = [
-                        'action' => 'transfer',
+                        'action' => 'Transfer bucket x to bucket y',
                         'current_bucket_main' => $current_bucket_main,
                         'current_bucket_other' => $current_bucket_other,
                         'amount_wanted_z' => $amount_wanted_z
@@ -136,7 +136,7 @@ class Exercisemodel extends CI_Model {
             if ($current_bucket_other === 0) {
                 $current_bucket_other = $bucket_other_limit;
                 $steps[] = [
-                    'action' => 'fill',
+                    'action' => 'Fill bucket y',
                     'current_bucket_main' => $current_bucket_main,
                     'current_bucket_other' => $current_bucket_other,
                     'amount_wanted_z' => $amount_wanted_z
@@ -153,7 +153,7 @@ class Exercisemodel extends CI_Model {
                 $current_bucket_other = $current_bucket_other - $bucket_main_limit;
                 $current_bucket_main = $bucket_main_limit;
                 $steps[] = [
-                    'action' => 'transfer',
+                    'action' => 'Transfer bucket y to bucket x',
                     'current_bucket_main' => $current_bucket_main,
                     'current_bucket_other' => $current_bucket_other,
                     'amount_wanted_z' => $amount_wanted_z
@@ -169,7 +169,7 @@ class Exercisemodel extends CI_Model {
             if ($current_bucket_main > 0) {
                 $current_bucket_main = 0;
                 $steps[] = [
-                    'action' => 'dump',
+                    'action' => 'Dump bucket x',
                     'current_bucket_main' => $current_bucket_main,
                     'current_bucket_other' => $current_bucket_other,
                     'amount_wanted_z' => $amount_wanted_z

@@ -26,17 +26,8 @@ class Exercisemodel extends CI_Model {
             ];
         }
 
-        // check if bucket_x and bucket_y are even or odd
-        if (
-            (
-                ($exercise['bucket_x'] % 2 === 0 || $exercise['bucket_y'] % 2 === 0 ) &&
-                $exercise['amount_wanted_z'] % 2 === 0
-            ) ||
-            (
-                ($exercise['bucket_x'] % 3 === 0 || $exercise['bucket_y'] % 3 === 0 ) &&
-                $exercise['amount_wanted_z'] % 3 === 0
-            )
-        ) {
+        // check if amount_wanted_z is a multiple of bucket_x or bucket_y
+        if ($exercise['amount_wanted_z'] % $exercise['bucket_x'] === 0 || $exercise['amount_wanted_z'] % $exercise['bucket_y'] === 0) {
             $res_x = $this->init_bucket_x(
                 $exercise['bucket_x'],
                 $exercise['bucket_y'],
@@ -94,7 +85,10 @@ class Exercisemodel extends CI_Model {
 
                 // check if bucket_other is at amount_wanted_z
                 if ($current_bucket_other === $amount_wanted_z) {
-                    return $steps;
+                    return [
+                        'steps' => $steps,
+                        'step_times' => $current_step
+                    ];
                 }
 
                 // transfer from bucket_main to bucket_other
@@ -111,7 +105,10 @@ class Exercisemodel extends CI_Model {
 
                 // check if bucket_other is at amount_wanted_z
                 if ($current_bucket_other === $amount_wanted_z) {
-                    return $steps;
+                    return [
+                        'steps' => $steps,
+                        'step_times' => $current_step
+                    ];
                 }
 
                 // emergency break
@@ -145,7 +142,10 @@ class Exercisemodel extends CI_Model {
 
             // check if bucket_other is at amount_wanted_z
             if ($current_bucket_other === $amount_wanted_z) {
-                return $steps;
+                return [
+                    'steps' => $steps,
+                    'step_times' => $current_step
+                ];
             }
 
             // transfer from bucket_other to bucket_main
@@ -162,7 +162,10 @@ class Exercisemodel extends CI_Model {
 
             // check if bucket_other is at amount_wanted_z
             if ($current_bucket_other === $amount_wanted_z) {
-                return $steps;
+                return [
+                    'steps' => $steps,
+                    'step_times' => $current_step
+                ];
             }
 
             // dump bucket_main

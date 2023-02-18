@@ -26,16 +26,16 @@ class Exercisemodel extends CI_Model {
             ];
         }
 
+
+
         // check if bucket_x and bucket_y are even or odd
         if (
             (
-                $exercise['bucket_x'] % 2 === 0 &&
-                $exercise['bucket_y'] % 2 === 0 &&
+                ($exercise['bucket_x'] % 2 === 0 || $exercise['bucket_y'] % 2 === 0 ) &&
                 $exercise['amount_wanted_z'] % 2 === 0
             ) ||
             (
-                $exercise['bucket_x'] % 3 === 0 &&
-                $exercise['bucket_y'] % 3 === 0 &&
+                ($exercise['bucket_x'] % 3 === 0 || $exercise['bucket_y'] % 3 === 0 ) &&
                 $exercise['amount_wanted_z'] % 3 === 0
             )
         ) {

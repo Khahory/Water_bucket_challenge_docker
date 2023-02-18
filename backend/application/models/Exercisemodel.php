@@ -111,11 +111,6 @@ class Exercisemodel extends CI_Model {
                         'step_times' => $current_step
                     ];
                 }
-
-                // emergency break
-                if ($current_step > 100) {
-                    return [];
-                }
             }
         }
 
@@ -182,6 +177,5 @@ class Exercisemodel extends CI_Model {
                 ];
             }
         }
-
     }
 }

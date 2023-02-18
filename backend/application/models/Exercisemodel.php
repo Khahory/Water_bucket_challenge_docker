@@ -26,8 +26,6 @@ class Exercisemodel extends CI_Model {
             ];
         }
 
-
-
         // check if bucket_x and bucket_y are even or odd
         if (
             (

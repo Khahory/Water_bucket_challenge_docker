@@ -71,9 +71,9 @@ class Exercisemodel extends CI_Model {
             $current_bucket_other = 0;
 
             while (true){
-                $current_step++;
                 // fill bucket_main
                 if ($current_bucket_main === 0) {
+                    $current_step++;
                     $current_bucket_main = $bucket_main_limit;
                     $steps[] = [
                         'action' => 'Fill bucket x',
@@ -93,6 +93,7 @@ class Exercisemodel extends CI_Model {
 
                 // transfer from bucket_main to bucket_other
                 if ($current_bucket_main > 0 && $current_bucket_other <= $bucket_other_limit) {
+                    $current_step++;
                     $current_bucket_other = $current_bucket_main + $current_bucket_other;
                     $current_bucket_main = 0;
                     $steps[] = [
@@ -128,9 +129,9 @@ class Exercisemodel extends CI_Model {
         $current_bucket_other = 0;
 
         while (true) {
-            $current_step++;
             // fill bucket_main
             if ($current_bucket_other === 0) {
+                $current_step++;
                 $current_bucket_other = $bucket_other_limit;
                 $steps[] = [
                     'action' => 'Fill bucket y',
@@ -150,6 +151,7 @@ class Exercisemodel extends CI_Model {
 
             // transfer from bucket_other to bucket_main
             if ($current_bucket_other > 0 && $current_bucket_main <= $bucket_main_limit) {
+                $current_step++;
                 $current_bucket_other = $current_bucket_other - $bucket_main_limit;
                 $current_bucket_main = $bucket_main_limit;
                 $steps[] = [
@@ -170,6 +172,7 @@ class Exercisemodel extends CI_Model {
 
             // dump bucket_main
             if ($current_bucket_main > 0) {
+                $current_step++;
                 $current_bucket_main = 0;
                 $steps[] = [
                     'action' => 'Dump bucket x',

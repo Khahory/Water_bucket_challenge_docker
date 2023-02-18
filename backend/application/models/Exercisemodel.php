@@ -41,7 +41,7 @@ class Exercisemodel extends CI_Model {
             // we have to separate the logic of filling, emptying and transferring
             // we must do a process for each bucket
             // fill, empty and transfer for X
-            if ($exercise['bucket_x'] < $exercise['bucket_y'] && $exercise['amount_wanted_z'] % $exercise['bucket_x'] === 0) {
+            if ($exercise['bucket_x'] < $exercise['bucket_y'] ) {
                 $res_x = $this->init_bucket_x(
                     $exercise['bucket_x'],
                     $exercise['bucket_y'],
@@ -60,7 +60,7 @@ class Exercisemodel extends CI_Model {
             }
 
             // fill, empty and transfer Y
-            if ($exercise['bucket_x'] > $exercise['bucket_y'] && $exercise['amount_wanted_z'] % $exercise['bucket_y'] === 0) {
+            if ($exercise['bucket_x'] > $exercise['bucket_y'] ) {
                 $res_x = $this->init_bucket_x(
                     $exercise['bucket_y'],
                     $exercise['bucket_x'],

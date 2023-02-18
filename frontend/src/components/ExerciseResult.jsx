@@ -47,7 +47,8 @@ const ExerciseResult = (props) => {
             }
 
             <pre>
-                {JSON.stringify(result, null, 2)}
+                {/* for debug */}
+                {/*{JSON.stringify(result, null, 2)}*/}
             </pre>
         </div>
     );

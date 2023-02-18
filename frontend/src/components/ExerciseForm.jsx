@@ -10,7 +10,7 @@ const ExerciseForm = () => {
         bucketY: "",
         amountZ: "",
     });
-    const [result, setResult] = useState([]);
+    const [result, setResult] = useState(null);
 
     // post request to backend
     const handleSubmit = (event) => {
@@ -84,7 +84,7 @@ const ExerciseForm = () => {
                     exercise.amountZ === ""
                 }/>
             </form>
-            <ExerciseResult result={result}/>
+            {result && <ExerciseResult result={result}/>}
         </div>
     );
 }

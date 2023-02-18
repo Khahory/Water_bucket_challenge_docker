@@ -64,57 +64,53 @@ class Exercisemodel extends CI_Model {
      * @return array
      */
     private function init_bucket_x($bucket_main_limit, $bucket_other_limit, $amount_wanted_z): array {
-        if ($bucket_main_limit <= $amount_wanted_z) {
-            $steps = [];
-            $current_step = 0;
-            $current_bucket_main = 0;
-            $current_bucket_other = 0;
+        $steps = [];
+        $current_step = 0;
+        $current_bucket_main = 0;
+        $current_bucket_other = 0;
 
-            while (true){
-                // fill bucket_main
-                if ($current_bucket_main === 0) {
-                    $current_step++;
-                    $current_bucket_main = $bucket_main_limit;
-                    $steps[] = [
-                        'action' => 'Fill bucket x',
-                        'current_bucket_main' => $current_bucket_main,
-                        'current_bucket_other' => $current_bucket_other,
-                        'amount_wanted_z' => $amount_wanted_z
-                    ];
-                }
+        while (true) {
+            // fill bucket_main
+            if ($current_bucket_main === 0) {
+                $current_step++;
+                $current_bucket_main = $bucket_main_limit;
+                $steps[] = [
+                    'action' => 'Fill bucket x',
+                    'current_bucket_main' => $current_bucket_main,
+                    'current_bucket_other' => $current_bucket_other,
+                    'amount_wanted_z' => $amount_wanted_z
+                ];
+            }
 
-                // check if bucket_other is at amount_wanted_z
-                if ($current_bucket_other === $amount_wanted_z) {
-                    return [
-                        'steps' => $steps,
-                        'step_times' => $current_step
-                    ];
-                }
+            // check if bucket_other is at amount_wanted_z
+            if ($current_bucket_other === $amount_wanted_z) {
+                return [
+                    'steps' => $steps,
+                    'step_times' => $current_step
+                ];
+            }
 
-                // transfer from bucket_main to bucket_other
-                if ($current_bucket_main > 0 && $current_bucket_other <= $bucket_other_limit) {
-                    $current_step++;
-                    $current_bucket_other = $current_bucket_main + $current_bucket_other;
-                    $current_bucket_main = 0;
-                    $steps[] = [
-                        'action' => 'Transfer bucket x to bucket y',
-                        'current_bucket_main' => $current_bucket_main,
-                        'current_bucket_other' => $current_bucket_other,
-                        'amount_wanted_z' => $amount_wanted_z
-                    ];
-                }
+            // transfer from bucket_main to bucket_other
+            if ($current_bucket_main > 0 && $current_bucket_other <= $bucket_other_limit) {
+                $current_step++;
+                $current_bucket_other = $current_bucket_main + $current_bucket_other;
+                $current_bucket_main = 0;
+                $steps[] = [
+                    'action' => 'Transfer bucket x to bucket y',
+                    'current_bucket_main' => $current_bucket_main,
+                    'current_bucket_other' => $current_bucket_other,
+                    'amount_wanted_z' => $amount_wanted_z
+                ];
+            }
 
-                // check if bucket_other is at amount_wanted_z
-                if ($current_bucket_other === $amount_wanted_z) {
-                    return [
-                        'steps' => $steps,
-                        'step_times' => $current_step
-                    ];
-                }
+            // check if bucket_other is at amount_wanted_z
+            if ($current_bucket_other === $amount_wanted_z) {
+                return [
+                    'steps' => $steps,
+                    'step_times' => $current_step
+                ];
             }
         }
-
-        return [];
     }
 
     private function init_bucket_y($bucket_main_limit, $bucket_other_limit, $amount_wanted_z){

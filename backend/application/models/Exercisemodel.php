@@ -14,6 +14,7 @@ class Exercisemodel extends CI_Model {
     public function doExercise($exercise) {
         $status_error = ['action' => 'NOT POSSIBLE',
             'current_bucket_main' => null,
+            'is_done' => false,
             'current_bucket_other' => null,
             'amount_wanted_z' => null];
 
@@ -42,8 +43,8 @@ class Exercisemodel extends CI_Model {
 
             return [
                 'exercise' => $exercise,
-                'res_y' => $res_y,
-                'res_x' => $res_x
+                'res_x' => $res_x,
+                'res_y' => $res_y
             ];
         }
 
@@ -65,11 +66,21 @@ class Exercisemodel extends CI_Model {
      */
     private function init_bucket_x($bucket_main_limit, $bucket_other_limit, $amount_wanted_z): array {
         $steps = [];
+        $current_step_emergency = 0;
         $current_step = 0;
         $current_bucket_main = 0;
         $current_bucket_other = 0;
 
+        // rules
+        if ($amount_wanted_z % $bucket_main_limit !== 0)
+            return ['action' => 'NOT POSSIBLE',
+                'current_bucket_main' => null,
+                'is_done' => false,
+                'current_bucket_other' => null,
+                'amount_wanted_z' => null];
+
         while (true) {
+            $current_step_emergency++;
             // fill bucket_main
             if ($current_bucket_main === 0) {
                 $current_step++;
@@ -86,6 +97,7 @@ class Exercisemodel extends CI_Model {
             if ($current_bucket_other === $amount_wanted_z) {
                 return [
                     'steps' => $steps,
+                    'is_done' => true,
                     'step_times' => $current_step
                 ];
             }
@@ -107,19 +119,37 @@ class Exercisemodel extends CI_Model {
             if ($current_bucket_other === $amount_wanted_z) {
                 return [
                     'steps' => $steps,
+                    'is_done' => true,
                     'step_times' => $current_step
                 ];
             }
+
+            // emergency break
+//            if ($current_step_emergency > 100)
+//                return [
+//                    'ERROR *WHILE*',
+//                    $steps
+//                ];
         }
     }
 
     private function init_bucket_y($bucket_main_limit, $bucket_other_limit, $amount_wanted_z){
         $steps = [];
+        $current_step_emergency = 0;
         $current_step = 0;
         $current_bucket_main = 0;
         $current_bucket_other = 0;
 
+        // rules
+        if ($amount_wanted_z % $bucket_other_limit !== 0)
+            return ['action' => 'NOT POSSIBLE',
+                'current_bucket_main' => null,
+                'is_done' => false,
+                'current_bucket_other' => null,
+                'amount_wanted_z' => null];
+
         while (true) {
+            $current_step_emergency++;
             // fill bucket_main
             if ($current_bucket_other === 0) {
                 $current_step++;
@@ -136,6 +166,7 @@ class Exercisemodel extends CI_Model {
             if ($current_bucket_other === $amount_wanted_z) {
                 return [
                     'steps' => $steps,
+                    'is_done' => true,
                     'step_times' => $current_step
                 ];
             }
@@ -157,6 +188,7 @@ class Exercisemodel extends CI_Model {
             if ($current_bucket_other === $amount_wanted_z) {
                 return [
                     'steps' => $steps,
+                    'is_done' => true,
                     'step_times' => $current_step
                 ];
             }
@@ -172,6 +204,13 @@ class Exercisemodel extends CI_Model {
                     'amount_wanted_z' => $amount_wanted_z
                 ];
             }
+
+            // emergency break
+//            if ($current_step_emergency > 100)
+//                return [
+//                    'ERROR *WHILE*',
+//                    $steps
+//                ];
         }
     }
 }

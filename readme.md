@@ -6,14 +6,20 @@ simulation should have a UI (if SPA) to display state changes for each state for
 You have an X-gallon and a Y-gallon jug that you can fill from a lake. (Assume lake has unlimited amount
 of water.) By using only an X-gallon and Y-gallon jug (no third jug), measure Z gallons of water.
 
+### GOALS
+1. Measure Z gallons of water in the most efficient way.
+2. Build a UI where a user can enter any input for X, Y, Z and see the solution.
+3. If no solution, display “No Solution”.
+
 ## Download
 Docker: https://www.docker.com/
 
 ## Installation
 1. Clone the repository
 2. Run the command `docker compose up` in the root folder of the project
-3. Go to http://localhost:3000/ in your browser
-4. Enjoy
+3. Wait for the docker containers to be built and started (frontend can take a while)
+4. Go to http://localhost:3000/ in your browser
+5. Enjoy
 
 ## About the docker-compose
 1. The docker-compose file contains 2 services

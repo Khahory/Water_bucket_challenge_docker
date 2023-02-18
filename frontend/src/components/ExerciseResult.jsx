@@ -17,7 +17,7 @@ const ExerciseResult = (props) => {
         (res_x.step_times < res_y.step_times ? res_x : res_y) :
         (res_x ? res_x : res_y);
 
-    console.warn(best_solution)
+    // console.warn(best_solution)
 
 
     return (

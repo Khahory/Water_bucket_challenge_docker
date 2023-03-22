@@ -1,4 +1,5 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
+header('Access-Control-Allow-Origin: *');
 
 require APPPATH . 'libraries/REST_Controller.php';
 
@@ -18,7 +19,9 @@ class Exercise  extends REST_Controller  {
      * @return void
      */
     public function index_post() {
-        $exercise = $this->post('exercise');
+        $exercise = $this->request->body;
+        // json to array
+        $exercise = json_decode($exercise[0], true);
 
         // validate exercise, if not valid, return error
         $is_valid = validate_exercise($exercise);
